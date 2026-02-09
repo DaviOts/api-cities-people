@@ -1,14 +1,11 @@
-import {create} from './Create.js';
-
+import { create, createValidation } from "./Create.js";
 
 // export const CidadesController = {
 //   ...create,
 // }
 
-export class CitiesController{
+export class CitiesController {
   public create = create;
 }
 
-export const citiesController = new CitiesController;
-
-
+export const citiesController = new CitiesController();
