@@ -6,20 +6,20 @@ import { StatusCodes } from "http-status-codes";
 import { validation } from "../../shared/middleware/index.js";
 
 
-export interface Icitie {
-  name: string;
+export interface IParamsProps {
+  id?: number;
 }
 
-export const createValidation = validation((getSchema) => ({
-  body: getSchema<Icitie>(
+export const deleteByIdValidation = validation((getSchema) => ({
+  params: getSchema<IParamsProps>(
     yup.object().shape({
-      name: yup.string().required().min(3),
+      id: yup.number().required().moreThan(0),
     }),
   ),
 }));
 
-export const create = async (req: Request<{}, {}, Icitie>, res: Response) => {
-  console.log(req.body);
+export const deleteById = async (req: Request<IParamsProps>, res: Response) => {
+  console.log(req.params);
 
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("nao implementado");
 };
