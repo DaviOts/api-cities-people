@@ -1,6 +1,6 @@
 import supertest from 'supertest';
-import { server } from '../src/server/Server.js';
+import { server } from '../src/server/Server';
 
 
 
-export const request = supertest(server);
+export const testServer = supertest(server);
