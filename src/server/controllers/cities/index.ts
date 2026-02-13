@@ -3,9 +3,6 @@ import { GetAll } from "./GetAll.js";
 import { GetById } from "./GetById.js";
 import { deleteById } from "./DeletedById.js";
 import { updateById } from "./UpdateById.js";
-// export const CidadesController = {
-//   ...create,
-// }
 
 export class CitiesController {
   public create = create;
