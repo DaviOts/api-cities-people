@@ -8,9 +8,9 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "build": "tsc",
     "test": "jest",
-    "production": "node ./dist/index.js",
-    "postinstall": "tsc"
+    "production": "node ./dist/index.js"
   },
   "dependencies": {
     "@types/jest": "^30.0.0",
