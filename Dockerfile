@@ -19,7 +19,8 @@ COPY package*.json ./
 RUN yarn install --omit=dev
 
 COPY --from=builder /app/dist ./dist
-# COPY --from=builder /app/knexfile.ts ./
+COPY --from=builder /app/knexfile.ts ./knexfile.ts
+COPY --from=builder /app/database ./database
 
 EXPOSE 3333
 
