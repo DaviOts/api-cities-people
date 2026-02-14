@@ -1,4 +1,4 @@
-import { knex } from "knex";
+import knex from "knex";
 import { development, test, production } from "./Environment.js";
 
 const getEnvironment = () => {

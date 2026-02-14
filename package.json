@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "test": "jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --no-worker-threads",
     "production": "node ./dist/index.js",
     "knex:migrate": "tsx ./node_modules/knex/bin/cli.js --knexfile ./src/server/database/knex/Environment.ts migrate:latest",
     "knex:rollback": "tsx ./node_modules/knex/bin/cli.js --knexfile ./src/server/database/knex/Environment.ts migrate:rollback",
