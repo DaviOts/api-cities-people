@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema
     .createTable(ETableNames.CITIES, (table) => {
       table.bigIncrements("id").primary().index();
-      table.string("name", 150).checkLength('<=', 150).index().notNullable();
+      table.string("name", 150).checkLength("<=", 150).index().notNullable();
 
       table.comment("Table of cities");
     })

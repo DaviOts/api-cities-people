@@ -4,7 +4,7 @@ import * as GetById from "./GetById.js";
 import * as DeleteById from "./DeletedById.js";
 import * as UpdateById from "./UpdateById.js";
 
-export class CitiesController {
+export class PeopleController {
   public create = Create.create;
   public getAll = GetAll.GetAll;
   public getById = GetById.GetById;
@@ -17,4 +17,4 @@ export class CitiesController {
   public updateByIdValidation = UpdateById.updateByIdValidation;
 }
 
-export const citiesController = new CitiesController();
+export const peopleController = new PeopleController();
