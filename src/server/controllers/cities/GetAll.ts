@@ -2,9 +2,8 @@ import type { Request, Response } from "express";
 import * as yup from "yup";
 import { StatusCodes } from "http-status-codes";
 
-
 import { validation } from "../../shared/middleware/index.js";
-
+import { citiesProvider } from "../../database/providers/cities/index.js";
 
 export interface IQueryProps {
   page?: number;
@@ -22,13 +21,33 @@ export const getAllValidation = validation((getSchema) => ({
   ),
 }));
 
-export const GetAll = async (req: Request<{}, {}, IQueryProps>, res: Response) => {
-  res.setHeader('acess-control-expose-headers', 'x-total-count');
-  res.setHeader('x-total-count', 1);
+export const GetAll = async (
+  req: Request<{}, {}, IQueryProps>,
+  res: Response,
+) => {
+  const result = await citiesProvider.getAll(
+    Number(req.query.page) || 1,
+    Number(req.query.limit) || 7,
+    (req.query.filter as string) || "",
+  );
+  const count = await citiesProvider.count((req.query.filter as string) || "");
 
-  return res.status(StatusCodes.OK).json([{
-    id: 1,
-    name: 'Paraiba'
-  }]);
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      },
+    });
+  } else if (count instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: count.message,
+      },
+    });
+  }
 
+  res.setHeader("access-control-expose-headers", "x-total-count");
+  res.setHeader("x-total-count", count);
+
+  return res.status(StatusCodes.OK).json(result);
 };

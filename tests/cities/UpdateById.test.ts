@@ -21,7 +21,7 @@ describe("cities - UPDATE BY ID", () => {
       name: "Paraiba",
     });
 
-    expect(res1.statusCode).toEqual(StatusCodes.NOT_ACCEPTABLE);
+    expect(res1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res1.body).toHaveProperty("errors.default");
   });
   it("not update a register with name less than 3 characters", async () => {

@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { StatusCodes } from "http-status-codes";
 
 import { validation } from "../../shared/middleware/index.js";
+import { citiesProvider } from "../../database/providers/cities/index.js";
 
 export interface IParamsProps {
   id?: number;
@@ -17,15 +18,22 @@ export const getByIdValidation = validation((getSchema) => ({
 }));
 
 export const GetById = async (req: Request<IParamsProps>, res: Response) => {
-  if (Number(req.params.id) === 99999)
+  if (!req.params.id)
     return res.status(StatusCodes.NOT_ACCEPTABLE).json({
       errors: {
-        default: "Register not found",
+        default: "Parameter id is not valid",
       },
     });
 
-  return res.status(StatusCodes.OK).json({
-    id: req.params.id,
-    name: "Paraiba",
-  });
+  const result = await citiesProvider.getById(req.params.id);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message,
+      },
+    });
+  }
+
+  return res.status(StatusCodes.OK).json(result);
 };

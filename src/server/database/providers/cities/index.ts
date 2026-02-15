@@ -1,15 +1,17 @@
 import { create } from "./Create.js";
-// import { GetAll } from "./GetAll.js";
-// import { GetById } from "./GetById.js";
-// import { deleteById } from "./DeletedById.js";
-// import { updateById } from "./UpdateById.js";
+import { getAll } from "./GetAll.js";
+import { getById } from "./GetById.js";
+import { deleteById } from "./DeletedById.js";
+import { updateById } from "./UpdateById.js";
+import { count } from "./Count.js";
 
 export class CitiesProvider {
   public create = create;
-//   public getAll = GetAll;
-//   public getById = GetById;
-//   public deleteById = deleteById;
-//   public updateById = updateById;
+  public getAll = getAll;
+  public getById = getById;
+  public deleteById = deleteById;
+  public updateById = updateById;
+  public count = count;
 }
 
 export const citiesProvider = new CitiesProvider();
