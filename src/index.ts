@@ -7,16 +7,20 @@ const startServer = () => {
   });
 };
 
-
 if (process.env.NODE_ENV === "production") {
-  Knex.migrate.latest()
+  Knex.migrate
+    .latest()
     .then(() => {
-      startServer();
+      Knex.seed
+        .run()
+        .then(() => startServer())
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
-    console.log(err);
+      console.log(err);
     });
 } else {
   startServer();
 }
-
