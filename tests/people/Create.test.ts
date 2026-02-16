@@ -21,8 +21,8 @@ describe("people - CREATE", () => {
 
   it("should create a register 2", async () => {
     const res1 = await testServer.post("/people").send({
-      name: "Abraham",
-      email: "Abraham2@gmail.com",
+      name: "Abracadabra",
+      email: "Abracadabra@gmail.com",
       cityId,
     });
 
