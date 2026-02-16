@@ -6,6 +6,8 @@ import { usersProvider } from "../../database/providers/users/index.js";
 import { validation } from "../../shared/middleware/index.js";
 import { IUser } from "../../database/models/index.js";
 
+import { PasswordCrypto, JWTService } from "../../shared/services/index.js";
+
 export interface IBodyProps extends Omit<IUser, "id" | "name"> {}
 
 export const signInValidation = validation((getSchema) => ({
@@ -23,9 +25,9 @@ export const signIn = async (
 ) => {
   const { email, password } = req.body;
 
-  const result = await usersProvider.getByEmail(email);
+  const user = await usersProvider.getByEmail(email);
 
-  if (result instanceof Error) {
+  if (user instanceof Error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: "Email or password incorrect",
@@ -33,14 +35,26 @@ export const signIn = async (
     });
   }
 
+  const passwordMatch = await PasswordCrypto.verifyPassword(
+    password,
+    user.password,
+  );
 
-  if (password !== result.password) {
+  if (!passwordMatch) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: "Email or password incorrect",
       },
     });
   } else {
-    return res.status(StatusCodes.OK).json({ accessToken: "token-valido"});
+    const accessToken = JWTService.sign({ uid: user.id });
+    if (accessToken === 'JWT_SECRET_NOT_FOUND') {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: "error to generate token",
+        },
+      });
+    }
+    return res.status(StatusCodes.OK).json({ accessToken });
   }
 };

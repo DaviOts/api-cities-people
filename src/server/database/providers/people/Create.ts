@@ -28,6 +28,9 @@ export const create = async (
     return new Error("Error to register person");
   } catch (error) {
     console.log(error);
+    if (error instanceof Error && error.message.includes("SQLITE_CONSTRAINT")) {
+      return new Error("Email already used");
+    }
     return new Error("Error to register person");
   }
 };
