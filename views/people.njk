@@ -1,0 +1,40 @@
+{% extends "layout.njk" %}
+
+{% block title %}People — Cities & People{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>👥 People</h1>
+    <p class="subtitle">{{ totalPeople }} person(s) registered</p>
+  </div>
+
+  {% if people.length > 0 %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Cidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for person in people %}
+          <tr>
+            <td>{{ person.id }}</td>
+            <td>{{ person.name }}</td>
+            <td>{{ person.email }}</td>
+            <td>{{ person.cityName | default("—") }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty-state">
+      <p>Nenhuma pessoa cadastrada ainda.</p>
+      <p class="hint">Use a API (POST /people) para adicionar pessoas.</p>
+    </div>
+  {% endif %}
+
+{% endblock %}

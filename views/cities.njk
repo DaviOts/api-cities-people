@@ -1,0 +1,36 @@
+{% extends "layout.njk" %}
+
+{% block title %}Cities — Cities & People{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>🏙️ Cities</h1>
+    <p class="subtitle">{{ totalCities }} city(s) registered</p>
+  </div>
+
+  {% if cities.length > 0 %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for city in cities %}
+          <tr>
+            <td>{{ city.id }}</td>
+            <td>{{ city.name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty-state">
+      <p>No city registered yet.</p>
+      <p class="hint">Use API (POST /cities) for add cities.</p>
+    </div>
+  {% endif %}
+
+{% endblock %}

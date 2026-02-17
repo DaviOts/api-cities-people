@@ -1,0 +1,25 @@
+{% extends "layout.njk" %}
+
+{% block title %}Home — Cities & People{% endblock %}
+
+{% block content %}
+
+  <section class="hero">
+    <h1>Welcome to Cities & People API</h1>
+    <p>Manage cities and people through this interface.</p>
+  </section>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-number">{{ totalCities }}</span>
+      <span class="stat-label">Cities registered</span>
+      <a href="/view/cities" class="stat-link">View all →</a>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">{{ totalPeople }}</span>
+      <span class="stat-label">People registered</span>
+      <a href="/view/people" class="stat-link">View all →</a>
+    </div>
+  </div>
+
+{% endblock %}
